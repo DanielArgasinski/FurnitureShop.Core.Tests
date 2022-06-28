@@ -1,6 +1,6 @@
-﻿namespace FurnitureShop.Core.Tests.Processor
+﻿namespace FurnitureShop.Core.Domain
 {
-    internal class FurnitureReservationResult
+    public class FurnitureReservationRequest
     {
         public string FirstName { get; set; }
         public string Surname { get; set; }

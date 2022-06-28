@@ -1,12 +1,14 @@
-﻿namespace FurnitureShop.Core.Tests.Processor
+﻿using FurnitureShop.Core.Domain;
+
+namespace FurnitureShop.Core.Processor
 {
-    internal class FurnitureReservationRequestProcessor
+    public class FurnitureReservationRequestProcessor
     {
         public FurnitureReservationRequestProcessor()
         {
         }
 
-        internal FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
+        public FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
         {
             return new FurnitureReservationResult
             {
