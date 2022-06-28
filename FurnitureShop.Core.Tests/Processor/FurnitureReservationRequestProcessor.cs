@@ -8,7 +8,13 @@
 
         internal FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
         {
-            throw new NotImplementedException();
+            return new FurnitureReservationResult
+            {
+                FirstName = request.FirstName,
+                Surname = request.Surname,
+                PhoneNu = request.PhoneNu,
+                Date = request.Date,
+            };
         }
     }
 }
