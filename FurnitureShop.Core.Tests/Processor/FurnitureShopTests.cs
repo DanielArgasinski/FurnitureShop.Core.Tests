@@ -11,6 +11,12 @@ namespace FurnitureShop.Core.Tests.Processor
 {
     public class FurnitureShopTests
     {
+        private  FurnitureReservationRequestProcessor _processor;
+
+        public FurnitureShopTests()
+        {
+            _processor = new FurnitureReservationRequestProcessor();
+        }
 
         [Fact]
         public void ReturnReservation()
@@ -23,9 +29,9 @@ namespace FurnitureShop.Core.Tests.Processor
                 Date = new DateTime(2022, 2, 2)
 
             };
-            var processor = new FurnitureReservationRequestProcessor();
+            _processor = new FurnitureReservationRequestProcessor();
 
-            FurnitureReservationResult result = processor.FurnitureReservation(request);
+            FurnitureReservationResult result = _processor.FurnitureReservation(request);
 
 
             Assert.NotNull(result);
