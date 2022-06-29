@@ -7,10 +7,7 @@ namespace FurnitureShop.Core.Processor
     {
         private readonly IFurnitureReservationRepository _furnitureReservationRepository;
 
-        public FurnitureReservationRequestProcessor()
-        {
-        }
-
+     
         public FurnitureReservationRequestProcessor(IFurnitureReservationRepository furnitureReservationRepository)
         {
             _furnitureReservationRepository = furnitureReservationRepository;
@@ -18,17 +15,15 @@ namespace FurnitureShop.Core.Processor
 
         public FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
         {
-           
-            _furnitureReservationRepository.Save(new FurnitureReservation
-            {
-                FirstName = request.FirstName,
-                Surname = request.Surname,
-                PhoneNu = request.PhoneNu,
-                Date = request.Date,
-            });
 
+            _furnitureReservationRepository.Save(Create<FurnitureReservation>(request));
 
-            return new FurnitureReservationResult
+            return Create<FurnitureReservationResult>(request);
+        }
+
+        private static T Create<T>(FurnitureReservationRequest request) where T : FurnitureReservationBase, new()
+        {
+            return new T
             {
                 FirstName = request.FirstName,
                 Surname = request.Surname,
@@ -38,3 +33,4 @@ namespace FurnitureShop.Core.Processor
         }
     }
 }
+

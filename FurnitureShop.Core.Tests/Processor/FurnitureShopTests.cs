@@ -46,9 +46,9 @@ namespace FurnitureShop.Core.Tests.Processor
         {
             FurnitureReservation savedReservation = null;
             _furnitureReservationRepositoryMock.Setup(a => a.Save(It.IsAny<FurnitureReservation>()))
-                .Callback<FurnitureReservation>(FurnitureReservation =>
+                .Callback<FurnitureReservation>(furnitureReservation =>
                 {
-                    savedReservation = FurnitureReservation;
+                    savedReservation = furnitureReservation;
                 });
 
             _processor.FurnitureReservation(_request);

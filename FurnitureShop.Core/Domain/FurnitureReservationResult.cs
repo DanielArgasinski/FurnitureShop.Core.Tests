@@ -1,10 +1,6 @@
 ﻿namespace FurnitureShop.Core.Domain
 {
-    public class FurnitureReservationResult
+    public class FurnitureReservationResult : FurnitureReservationBase
     {
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
-        public string PhoneNu { get; set; }
-        public DateTime Date { get; set; }
     }
 }
