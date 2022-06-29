@@ -9,7 +9,9 @@ namespace FurnitureShop.Core.Tests.Processor
     public class FurnitureShopTests
     {
         private readonly FurnitureReservationRequest _request;
+        private readonly List<FurnitureReservation> _availableFurniture;
         private readonly Mock<IFurnitureReservationRepository> _furnitureReservationRepositoryMock;
+        private readonly Mock<IReservationRepository> _reservationRepositoryMock;
         private FurnitureReservationRequestProcessor _processor;
 
         public FurnitureShopTests()
@@ -23,10 +25,15 @@ namespace FurnitureShop.Core.Tests.Processor
 
             };
 
+            _availableFurniture = new List<FurnitureReservation> { new FurnitureReservation() };
+
             _furnitureReservationRepositoryMock = new Mock<IFurnitureReservationRepository>();
+            _reservationRepositoryMock = new Mock<IReservationRepository>();
+            _reservationRepositoryMock.Setup(a => a.AvailaleFurniture(_request.Date))
+                .Returns(_availableFurniture);
 
             _processor = new FurnitureReservationRequestProcessor(
-                _furnitureReservationRepositoryMock.Object);
+                _furnitureReservationRepositoryMock.Object, _reservationRepositoryMock.Object);
         }
 
         [Fact]
@@ -60,6 +67,17 @@ namespace FurnitureShop.Core.Tests.Processor
             Assert.Equal(_request.Surname, savedReservation.Surname);
             Assert.Equal(_request.PhoneNu, savedReservation.PhoneNu);
             Assert.Equal(_request.Date, savedReservation.Date);
+        }
+
+        [Fact]
+        public void Availability()
+        {
+            _availableFurniture.Clear();
+
+            _processor.FurnitureReservation(_request);
+
+            _furnitureReservationRepositoryMock.Verify(a => a.Save(It.IsAny<FurnitureReservation>()), Times.Never());
+
         }
     }
 }

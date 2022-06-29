@@ -6,11 +6,12 @@ namespace FurnitureShop.Core.Processor
     public class FurnitureReservationRequestProcessor
     {
         private readonly IFurnitureReservationRepository _furnitureReservationRepository;
+        private readonly IReservationRepository _reservationRepository;
 
-     
-        public FurnitureReservationRequestProcessor(IFurnitureReservationRepository furnitureReservationRepository)
+        public FurnitureReservationRequestProcessor(IFurnitureReservationRepository furnitureReservationRepository, IReservationRepository reservationRepository)
         {
             _furnitureReservationRepository = furnitureReservationRepository;
+            _reservationRepository = reservationRepository;
         }
 
         public FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
