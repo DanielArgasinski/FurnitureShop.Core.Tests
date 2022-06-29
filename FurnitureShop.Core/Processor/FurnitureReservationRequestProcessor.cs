@@ -16,8 +16,11 @@ namespace FurnitureShop.Core.Processor
 
         public FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
         {
-
-            _furnitureReservationRepository.Save(Create<FurnitureReservation>(request));
+            var availableFurnitures = _reservationRepository.AvailaleFurniture(request.Date);
+            if (availableFurnitures.Count() > 0)
+            {
+                _furnitureReservationRepository.Save(Create<FurnitureReservation>(request));
+            }
 
             return Create<FurnitureReservationResult>(request);
         }
