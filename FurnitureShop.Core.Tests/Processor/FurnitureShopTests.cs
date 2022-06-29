@@ -2,11 +2,6 @@
 using FurnitureShop.Core.Domain;
 using FurnitureShop.Core.Processor;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace FurnitureShop.Core.Tests.Processor
@@ -15,7 +10,7 @@ namespace FurnitureShop.Core.Tests.Processor
     {
         private readonly FurnitureReservationRequest _request;
         private readonly Mock<IFurnitureReservationRepository> _furnitureReservationRepositoryMock;
-        private  FurnitureReservationRequestProcessor _processor;
+        private FurnitureReservationRequestProcessor _processor;
 
         public FurnitureShopTests()
         {
@@ -37,11 +32,7 @@ namespace FurnitureShop.Core.Tests.Processor
         [Fact]
         public void ReturnReservation()
         {
-            
-            _processor = new FurnitureReservationRequestProcessor();
-
             FurnitureReservationResult result = _processor.FurnitureReservation(_request);
-
 
             Assert.NotNull(result);
             Assert.Equal(_request.FirstName, result.FirstName);
@@ -54,15 +45,15 @@ namespace FurnitureShop.Core.Tests.Processor
         public void SaveReservation()
         {
             FurnitureReservation savedReservation = null;
-            _furnitureReservationRepositoryMock.Setup(a=>a.Save(It.IsAny<FurnitureReservation>()))
+            _furnitureReservationRepositoryMock.Setup(a => a.Save(It.IsAny<FurnitureReservation>()))
                 .Callback<FurnitureReservation>(FurnitureReservation =>
                 {
                     savedReservation = FurnitureReservation;
-                }); 
+                });
 
             _processor.FurnitureReservation(_request);
 
-            _furnitureReservationRepositoryMock.Verify(a=>a.Save(It.IsAny<FurnitureReservation>()), Times.Once());
+            _furnitureReservationRepositoryMock.Verify(a => a.Save(It.IsAny<FurnitureReservation>()), Times.Once());
 
             Assert.NotNull(savedReservation);
             Assert.Equal(_request.FirstName, savedReservation.FirstName);
