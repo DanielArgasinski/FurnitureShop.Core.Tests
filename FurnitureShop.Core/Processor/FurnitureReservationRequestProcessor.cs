@@ -8,6 +8,10 @@ namespace FurnitureShop.Core.Processor
         {
         }
 
+        public FurnitureReservationRequestProcessor(DataInterface.IFurnitureReservationRepository @object)
+        {
+        }
+
         public FurnitureReservationResult FurnitureReservation(FurnitureReservationRequest request)
         {
             return new FurnitureReservationResult
