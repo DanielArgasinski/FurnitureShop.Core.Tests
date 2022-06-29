@@ -19,7 +19,11 @@ namespace FurnitureShop.Core.Processor
             var availableFurnitures = _reservationRepository.AvailaleFurniture(request.Date);
             if (availableFurnitures.Count() > 0)
             {
-                _furnitureReservationRepository.Save(Create<FurnitureReservation>(request));
+                var _availableFurnitures = availableFurnitures.First();
+                var FurnitureReservation = Create<FurnitureReservation>(request);
+                FurnitureReservation.FurnitureId = _availableFurnitures.Id;
+
+                _furnitureReservationRepository.Save(FurnitureReservation);
             }
 
             return Create<FurnitureReservationResult>(request);
