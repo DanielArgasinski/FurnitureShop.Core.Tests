@@ -25,7 +25,7 @@ namespace FurnitureShop.Core.Tests.Processor
 
             };
 
-            _availableFurniture = new List<FurnitureReservation> { new FurnitureReservation() };
+            _availableFurniture = new List<FurnitureReservation> { new FurnitureReservation { Id = 2  } };
 
             _furnitureReservationRepositoryMock = new Mock<IFurnitureReservationRepository>();
             _reservationRepositoryMock = new Mock<IReservationRepository>();
@@ -79,5 +79,30 @@ namespace FurnitureShop.Core.Tests.Processor
             _furnitureReservationRepositoryMock.Verify(a => a.Save(It.IsAny<FurnitureReservation>()), Times.Never());
 
         }
+
+        [Fact]
+        public void StoreFurnitureIdOnTheReservation()
+        {
+            FurnitureReservation savedReservation = null;
+            _furnitureReservationRepositoryMock.Setup(a => a.Save(It.IsAny<FurnitureReservation>()))
+                .Callback<FurnitureReservation>(furnitureReservation =>
+                {
+                    savedReservation = furnitureReservation;
+                });
+
+            _processor.FurnitureReservation(_request);
+
+            _furnitureReservationRepositoryMock.Verify(a => a.Save(It.IsAny<FurnitureReservation>()), Times.Once());
+
+            Assert.NotNull(savedReservation);
+            Assert.Equal(_request.FirstName, savedReservation.FirstName);
+            Assert.Equal(_request.Surname, savedReservation.Surname);
+            Assert.Equal(_request.PhoneNu, savedReservation.PhoneNu);
+            Assert.Equal(_request.Date, savedReservation.Date);
+            Assert.Equal(_availableFurniture.First().Id, savedReservation.FurnitureId);
+        }
+
+
     }
+
 }
